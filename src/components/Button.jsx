@@ -1,5 +1,5 @@
-// Component for different button variants 
 
+// Website Buttons
 function Button({ variant='primary', children, className='', ...props }) {
     const baseStyles = 'shadow-sm rounded-md focus:outline-none py-1.5';
 
@@ -18,4 +18,6 @@ function Button({ variant='primary', children, className='', ...props }) {
     )
 }
 
+
 export default Button;
+

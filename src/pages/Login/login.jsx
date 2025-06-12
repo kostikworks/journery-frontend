@@ -1,11 +1,7 @@
 import Button from '../../components/Button';
-import GoogleSignInButton from '../../components/GoogleSignInButton';
+import { GoogleLogin } from '@react-oauth/google';
 
 function LoginForm() {
-  const handleGoogleSuccess = (response) => {
-    console.log("Google login success:", response.credential);
-    // Handle Google login here
-  };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -80,10 +76,14 @@ function LoginForm() {
           </div>
         </div>
 
-        <GoogleSignInButton 
-          clientId="1095157099365-9clqgqhj1h8grkcb8h5093gd8t581l01.apps.googleusercontent.com"  // Replace with your actual Client ID
-          onSuccess={handleGoogleSuccess}
-        />
+      <GoogleLogin
+        onSuccess={credentialResponse => {
+          console.log(credentialResponse);
+        }}
+        onError={() => {
+          console.log('Login Failed');
+        }}
+      />
 
         <p className='text-sm text-center text-gray-600 mt-6'>
           Don't have an account?{' '}

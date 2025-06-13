@@ -1,7 +1,7 @@
 import Button from '../../components/Button';
 import { GoogleLogin } from '@react-oauth/google';
 
-function LoginForm() {
+function Login() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -77,8 +77,9 @@ function LoginForm() {
         </div>
 
       <GoogleLogin
+        shape='rectangular'
         onSuccess={credentialResponse => {
-          console.log(credentialResponse);
+          console.log('Login Successful' + credentialResponse);
         }}
         onError={() => {
           console.log('Login Failed');
@@ -97,4 +98,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default Login;

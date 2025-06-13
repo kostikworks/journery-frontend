@@ -1,10 +1,11 @@
 import Header from "./components/Header.jsx";
-import LoginForm from "./pages/Login/login.jsx"
+import Login from "./pages/Login/login.jsx"
+import Register from './pages/Registration/registration.jsx'
 
 function App() {
   return (
     <div>
-      <LoginForm />
+      <Register />
     </div>
   )
 }

@@ -7,7 +7,7 @@ import Button from './Button'
 // Header for Landing page
 function Header() {
   return (
-    <header className='sticky top-0 w-full min-w-full text-sm border-b border-gray-200 bg-white z-50'>
+    <header className='sticky top-0 w-full min-w-full text-md border-b border-gray-200 bg-white z-50'>
       {/* Content container */}
       <div className='px-4 sm:px-8 lg:px-12 py-3 max-w-[1675px] mx-auto flex justify-between items-center'>
         {/* Logo */}

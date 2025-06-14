@@ -1,7 +1,13 @@
+import { useState } from 'react';
 import Button from '../../components/Button';
 import { useGoogleLogin } from '@react-oauth/google';
 
 function Register() {
+    // State for Register with Email flow
+    const [emailSignUp, setEmailSignUp] = useState(false);
+
+
+    // Google Sign up
     const googleSignup = useGoogleLogin({
         onSuccess: credentialResponse => {
             console.log('Signup Successful', credentialResponse);
@@ -11,64 +17,8 @@ function Register() {
         },
     });
 
-    function signUpWithEmail() {
-        return(
-            <div flex justify-center items-center>
-                <form action="">
-                    <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                        Name
-                        </label>
-                        <input
-                        id="name"
-                        name="name"
-                        type="name"
-                        required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="John Doe"
-                        />
-                    </div>
-                   <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                        Email
-                        </label>
-                        <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="name@example.com"
-                        />
-                    </div>
 
-                    <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                        Password
-                        </label>
-                        <input
-                        id="password"
-                        name="password"
-                        type="password"
-                        required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Enter your password"
-                        />
-                    </div>
-                    <div>
-                        <input
-                        id="password2"
-                        name="password2"
-                        type="password2"
-                        required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Confirm your password"
-                        />
-                    </div>
-                </form>
-            </div>
-        )
-    }
+
 
     return (
         <div className='flex justify-center items-center min-h-screen px-4'>
@@ -83,14 +33,92 @@ function Register() {
                 </div>
 
                 <div className='space-y-4'>
-                    <Button 
-                    onClick={signUpWithEmail}
-                    className="w-full text-center h-[38px]" 
+                    <Button
+                    onClick={() => {setEmailSignUp(prev => !prev)}}
+                    variant={emailSignUp ? "active" : "primary"}
+                    className="w-full text-center h-[38px]"
                     type='button'
+                    disabled={emailSignUp}
                     >
                         Sign up with Email
                     </Button>
-                    
+
+                    { emailSignUp && (
+                        <>
+                            <form
+                            className='flex flex-col gap-4 '
+                            action="">
+                                <div>
+                                    <label htmlFor="name" className="mt-[14px] block text-sm font-medium text-gray-700 mb-1">
+                                    Name
+                                    </label>
+                                    <input
+                                    id="name"
+                                    name="name"
+                                    type="name"
+                                    required
+                                    className=" w-full px-3 py-2 max-h-[38px] border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    placeholder="John Doe"
+                                    />
+                                </div>
+                            <div>
+                                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                                    Email
+                                    </label>
+                                    <input
+                                    id="email"
+                                    name="email"
+                                    type="email"
+                                    required
+                                    className="w-full px-3 py-2 max-h-[38px] border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    placeholder="name@example.com"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                                    Password
+                                    </label>
+                                    <input
+                                    id="password"
+                                    name="password"
+                                    type="password"
+                                    required
+                                    className="w-full px-3 py-2 max-h-[38px] border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    placeholder="Enter your password"
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="password2" className="block text-sm font-medium text-gray-700 mb-1">
+                                    Confirm password
+                                    </label>
+                                    <input
+                                    id="password2"
+                                    name="password2"
+                                    type="password"
+                                    required
+                                    className="w-full px-3 py-2 max-h-[38px] border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    placeholder="Confirm your password"
+                                    />
+                                </div>
+                                <Button
+                                className=' min-h-[38px] mt-[8px]'
+                                type='submit'
+                                >
+                                    Create account
+                                </Button>
+                            </form>
+                            <div className="relative">
+                                <div className="absolute inset-0 flex items-center">
+                                    <div className="w-full border-t border-gray-300" />
+                                </div>
+                                <div className="relative flex justify-center text-sm">
+                                    <span className="bg-[#d4dfff4b] px-4 text-gray-500">or continue</span>
+                                </div>
+                            </div>
+                        </>
+                    )}
+                
                     <Button 
                         type='button'
                         onClick={() => googleSignup()}

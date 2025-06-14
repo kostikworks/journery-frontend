@@ -11,6 +11,65 @@ function Register() {
         },
     });
 
+    function signUpWithEmail() {
+        return(
+            <div flex justify-center items-center>
+                <form action="">
+                    <div>
+                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                        Name
+                        </label>
+                        <input
+                        id="name"
+                        name="name"
+                        type="name"
+                        required
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="John Doe"
+                        />
+                    </div>
+                   <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                        Email
+                        </label>
+                        <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        required
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="name@example.com"
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                        Password
+                        </label>
+                        <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        required
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Enter your password"
+                        />
+                    </div>
+                    <div>
+                        <input
+                        id="password2"
+                        name="password2"
+                        type="password2"
+                        required
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Confirm your password"
+                        />
+                    </div>
+                </form>
+            </div>
+        )
+    }
+
     return (
         <div className='flex justify-center items-center min-h-screen px-4'>
             <div className='w-full max-w-sm bg-[#d4dfff4b] px-6 py-8 rounded-lg shadow-sm'> 
@@ -24,11 +83,16 @@ function Register() {
                 </div>
 
                 <div className='space-y-4'>
-                    <Button className="w-full text-center">
+                    <Button 
+                    onClick={signUpWithEmail}
+                    className="w-full text-center h-[38px]" 
+                    type='button'
+                    >
                         Sign up with Email
                     </Button>
                     
                     <Button 
+                        type='button'
                         onClick={() => googleSignup()}
                         className="w-full bg-white border border-gray-300 !text-gray-700 hover:bg-gray-50 hover:!text-gray-700 flex items-center text-left relative"
                     >

@@ -36,7 +36,8 @@ function Header() {
           <Button
           aria-label='Get started for free'
           >
-            Get started for free
+            <span className="block sm:hidden">Join</span>
+            <span className="hidden sm:block">Get started for free</span>
           </Button>
         </nav>
       </div>

@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import Button from '../../components/Button';
 import { useGoogleLogin } from '@react-oauth/google';
+import { Link, useNavigate } from 'react-router';
 
 function Register() {
     // State for Register with Email flow
     const [emailSignUp, setEmailSignUp] = useState(false);
+
+    const navigate = useNavigate();
 
 
     // Google Sign up
@@ -85,7 +88,7 @@ function Register() {
                                     type="password"
                                     required
                                     className="w-full px-3 py-2 max-h-[38px] border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                    placeholder="Enter your password"
+                                    placeholder="Enter password"
                                     />
                                 </div>
                                 <div>
@@ -98,7 +101,7 @@ function Register() {
                                     type="password"
                                     required
                                     className="w-full px-3 py-2 max-h-[38px] border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                    placeholder="Confirm your password"
+                                    placeholder="Confirm password"
                                     />
                                 </div>
                                 <Button
@@ -137,9 +140,9 @@ function Register() {
 
                 <p className='text-sm text-left text-gray-600 mt-6'>
                     Already have an account?{' '}
-                    <a href="/login" className='text-blue-600 hover:underline'>
+                    <Link to='/login' className='text-blue-600 hover:underline'>
                         Login here
-                    </a>
+                    </Link>
                 </p>
             </div>
         </div>

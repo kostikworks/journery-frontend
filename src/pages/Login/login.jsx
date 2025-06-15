@@ -1,7 +1,10 @@
 import Button from '../../components/Button';
 import { GoogleLogin } from '@react-oauth/google';
+import { Link, useNavigate } from 'react-router';
 
 function Login() {
+
+  const navigate = useNavigate();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -88,9 +91,9 @@ function Login() {
 
         <p className='text-sm text-center text-gray-600 mt-6'>
           Don't have an account?{' '}
-          <a href="/register" className='text-blue-600 hover:underline'>
+          <Link to='/registration' className='text-blue-600 hover:underline'>
             Register here
-          </a>
+          </Link>
         </p>
 
       </div>

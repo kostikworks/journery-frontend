@@ -7,7 +7,7 @@ function Register() {
     // State for Register with Email flow
     const [emailSignUp, setEmailSignUp] = useState(false);
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
 
     // Google Sign up

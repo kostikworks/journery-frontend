@@ -1,10 +1,9 @@
-import Header from "./components/Header.jsx";
 import AppRoutes from "./routes/AppRoutes.jsx";
+import Landing from "./pages/Landing/landing.jsx";
 
 function App() {
   return (
-    <div>
-      <Header /> 
+    <div> 
       <AppRoutes />
     </div>
   )

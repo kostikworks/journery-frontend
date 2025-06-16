@@ -1,5 +1,5 @@
 // Free SVG icon of a book that I found online
-import journeryIcon from '../assets/book-square-svgrepo-com.svg';
+import journeryIcon from '../assets/logo.svg';
 import { Link, useNavigate } from 'react-router';
 
 // Import Button component
@@ -8,6 +8,7 @@ import Button from './Button'
 // Header for Landing page
 function Header() {
 const navigate = useNavigate();
+
 
   return (
     <header className='sticky top-0 w-full min-w-full text-md border-b border-gray-200 bg-white z-50'>
@@ -21,12 +22,12 @@ const navigate = useNavigate();
           tabIndex={0}
           aria-label='Go to homepage'
         > 
-          <img 
-            className='mr-2 w-8 h-8 opacity-90 hover:-rotate-6 transition-transform duration-200'
-            src={journeryIcon} 
-            alt='Journery logo' 
-          />
-          <span className='text-lg font-medium'>Journery</span>
+        <img 
+          className="w-6 h-6 scale-[1.5] origin-center opacity-90 hover:-rotate-6 transition-transform duration-200"
+          src={journeryIcon} 
+          alt="Journery logo" 
+        />
+          <span className='text-[25px] font-medium text-[#525252]'>ournery</span>
         </Link>
         {/* Nav Buttons */}
         <nav className='flex gap-3 pl-6'>

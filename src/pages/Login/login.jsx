@@ -2,8 +2,11 @@ import Button from '../../components/Button';
 import { useGoogleLogin } from '@react-oauth/google';
 import { Link, useNavigate } from 'react-router';
 import Header from '../../components/Header';
+import { useAuth } from '../../context/AuthContext'
 
 function Login() {
+
+      const { login } = useAuth();
 
       const googleLogin = useGoogleLogin({
         onSuccess: credentialResponse => {
@@ -15,11 +18,6 @@ function Login() {
     });
 
   // const navigate = useNavigate();
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    // Handle regular login here
-  };
 
   return (
     <div className='flex flex-col min-h-screen'>
@@ -36,7 +34,12 @@ function Login() {
             </p>
           </div>
 
-          <form onSubmit={handleFormSubmit} className="space-y-4">
+          <form 
+            onSubmit={(e) => {
+              e.preventDefault;
+              login('fake-token-123');
+            }} 
+            className="space-y-4">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                 Email

@@ -1,28 +1,108 @@
 import { useState } from 'react';
 import Button from '../../components/Button';
 import { useGoogleLogin } from '@react-oauth/google';
-import { Link, useNavigate } from 'react-router';
+import { Link } from 'react-router';
 import Header from '../../components/Header';
+import { useAuth } from '../../context/AuthContext';
 
 function Register() {
-    // State for Register with Email flow
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+    });
+
+    const [errors, setErrors] = useState({});
     const [emailSignUp, setEmailSignUp] = useState(false);
+    
+    const { login } = useAuth();
 
-    // const navigate = useNavigate();
+    const validateForm = () => {
+        const newErrors = {};
+        
+        if (!formData.name.trim()) {
+            newErrors.name = "Name is required";
+        }
+        
+        if (!formData.email.trim()) {
+            newErrors.email = "Email is required";
+        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+            newErrors.email = "Please enter a valid email";
+        }
+        
+        if (!formData.password) {
+            newErrors.password = "Password is required";
+        } else if (formData.password.length < 6) {
+            newErrors.password = "Password must be at least 6 characters";
+        }
+        
+        if (formData.password !== formData.confirmPassword) {
+            newErrors.confirmPassword = "Passwords do not match";
+        }
+        
+        return newErrors;
+    };
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        
+        const formErrors = validateForm();
+        
+        if (Object.keys(formErrors).length > 0) {
+            setErrors(formErrors);
+            return;
+        }
+        
+        // Clear any previous errors
+        setErrors({});
+        
+        // Simulate API call
+        console.log("User registered:", {
+            name: formData.name,
+            email: formData.email,
+            password: formData.password
+        });
+
+        // Save token in context (normally returned by API)
+        login("fake-token-registered-123");
+
+        // Reset the form
+        setFormData({
+            name: '',
+            email: '',
+            password: '',
+            confirmPassword: ''
+        });
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+        
+        // Clear error for this field when user starts typing
+        if (errors[name]) {
+            setErrors(prev => ({
+                ...prev,
+                [name]: ''
+            }));
+        }
+    };
 
     // Google Sign up
     const googleSignup = useGoogleLogin({
         onSuccess: credentialResponse => {
             console.log('Signup Successful', credentialResponse);
+            // Handle successful Google signup here
+            login("fake-google-token-123");
         },
         onError: () => {
             console.log('Signup Failed');
         },
     });
-
-
-
 
     return (
         <div className="min-h-screen flex flex-col">
@@ -40,80 +120,94 @@ function Register() {
 
                     <div className='space-y-4'>
                         <Button
-                        onClick={() => {setEmailSignUp(prev => !prev)}}
-                        variant={emailSignUp ? "active" : "primary"}
-                        className="w-full text-center h-[38px]"
-                        type='button'
-                        disabled={emailSignUp}
+                            onClick={() => setEmailSignUp(prev => !prev)}
+                            variant={emailSignUp ? "active" : "primary"}
+                            className="w-full text-center h-[38px]"
+                            type='button'
+                            disabled={emailSignUp}
                         >
                             Sign up with Email
                         </Button>
 
-                        { emailSignUp && (
+                        {emailSignUp && (
                             <>
-                                <form
-                                className='flex flex-col gap-4 '
-                                action="">
+                                <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
                                     <div>
                                         <label htmlFor="name" className="mt-[14px] block text-sm font-medium text-gray-700 mb-1">
-                                        Name
+                                            Name
                                         </label>
                                         <input
-                                        id="name"
-                                        name="name"
-                                        type="name"
-                                        required
-                                        className=" w-full px-3 py-2 max-h-[38px] border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                        placeholder="John Doe"
+                                            id="name"
+                                            name="name"
+                                            type="text"
+                                            value={formData.name}
+                                            onChange={handleChange}
+                                            required
+                                            className="w-full px-3 py-2 max-h-[38px] border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            placeholder="John Doe"
                                         />
+                                        {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                                     </div>
-                                <div>
+
+                                    <div>
                                         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                                        Email
+                                            Email
                                         </label>
                                         <input
-                                        id="email"
-                                        name="email"
-                                        type="email"
-                                        required
-                                        className="w-full px-3 py-2 max-h-[38px] border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                        placeholder="name@example.com"
+                                            id="email"
+                                            name="email"
+                                            type="email"
+                                            value={formData.email}
+                                            onChange={handleChange}
+                                            required
+                                            className="w-full px-3 py-2 max-h-[38px] border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            placeholder="name@example.com"
                                         />
+                                        {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                                     </div>
 
                                     <div>
                                         <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                                        Password
+                                            Password
                                         </label>
                                         <input
-                                        id="password"
-                                        name="password"
-                                        type="password"
-                                        required
-                                        className="w-full px-3 py-2 max-h-[38px] border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                        placeholder="Enter password"
+                                            id="password"
+                                            name="password"
+                                            type="password"
+                                            value={formData.password}
+                                            onChange={handleChange}
+                                            required
+                                            className="w-full px-3 py-2 max-h-[38px] border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            placeholder="Enter password"
                                         />
+                                        {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
                                     </div>
+
                                     <div>
-                                        <label htmlFor="password2" className="block text-sm font-medium text-gray-700 mb-1">
-                                        Confirm password
+                                        <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                                            Confirm password
                                         </label>
                                         <input
-                                        id="password2"
-                                        name="password2"
-                                        type="password"
-                                        required
-                                        className="w-full px-3 py-2 max-h-[38px] border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                        placeholder="Confirm password"
+                                            id="confirmPassword"
+                                            name="confirmPassword"
+                                            type="password"
+                                            value={formData.confirmPassword}
+                                            onChange={handleChange}
+                                            required
+                                            className="w-full px-3 py-2 max-h-[38px] border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            placeholder="Confirm password"
                                         />
+                                        {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>}
                                     </div>
+
                                     <Button
-                                    className=' min-h-[38px] mt-[8px]'
-                                    type='submit'
+                                        className='min-h-[38px] mt-[8px]'
+                                        type='submit'
                                     >
                                         Create account
                                     </Button>
                                 </form>
+
                                 <div className="relative">
                                     <div className="absolute inset-0 flex items-center">
                                         <div className="w-full border-t border-gray-300" />

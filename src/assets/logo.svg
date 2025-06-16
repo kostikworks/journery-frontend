@@ -1,0 +1,22 @@
+<svg width="64" height="64" viewBox="0 2 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Bold black J with rounded corners -->
+  <path
+    d="M6 5
+       H26
+       A1 1 0 0 1 27 6
+       V14
+       H19
+       V23
+       A3 3 0 0 1 14 26
+       A3 3 0 0 1 9 23
+       V20
+       H15
+       V14
+       H6
+       A1 1 0 0 1 5 13
+       V6
+       A1 1 0 0 1 6 5
+       Z"
+    fill="#525252"
+  />
+</svg>

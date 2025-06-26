@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import Button from '../../components/Button';
 import { useGoogleLogin } from '@react-oauth/google';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import Header from '../../components/Header';
 import { useAuth } from '../../context/AuthContext';
 
-function Register() {
+function Registration() {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         password: '',
         confirmPassword: ''
     });
+
+    const navigate = useNavigate();
 
     const [errors, setErrors] = useState({});
     const [emailSignUp, setEmailSignUp] = useState(false);
@@ -66,6 +68,7 @@ function Register() {
 
         // Save token in context (normally returned by API)
         login("fake-token-registered-123");
+        navigate('/dashboard')
 
         // Reset the form
         setFormData({
@@ -98,6 +101,7 @@ function Register() {
             console.log('Signup Successful', credentialResponse);
             // Handle successful Google signup here
             login("fake-google-token-123");
+            navigate('/dashboard')
         },
         onError: () => {
             console.log('Signup Failed');
@@ -247,4 +251,4 @@ function Register() {
     );
 }
 
-export default Register;
+export default Registration;
